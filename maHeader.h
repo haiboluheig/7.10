@@ -1,35 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   newfile.h
- * Author: lvhb_
- *
- * Created on February 28, 2018, 3:51 PM
- */
-
+//7.10
 #ifndef MAHEADER_H
 #define MAHEADER_H
-#include <iostream>
 #include <cstdlib>
+#include <vector>
+#include <ctime>
+#include<string>
 using namespace std;
-using uint = unsigned int;
+using TexteMessage = vector <string>;
 
-class Objet {
-    friend ostream& operator<<(ostream& os, const Objet& obj);
+class Message {
 public:
-    Objet();
-    ~Objet();
-    uint no() const;
-    static uint prochainNo();
-    static uint compteur();
+    //constructeur
+    Message(const string& expditeur, const string& destinataire);
+    //modificateur
+    void ajouter(const string& ligneTexte);
+    //Convertir l'object courant en chaîne de caracteres
+    string toString()const;
+    //affiche le contenu intégral de l'objet courant
+    void afficher() const;
+    //les accesseurs viendraient s'insérer ici
 private:
-    uint _no;
-    static uint _prochainNo;
-    static uint _compteur;
+    const time_t DATE_CREATION = time(NULL); //date-heure de création du message
+    string expediteur;
+    string destinataire;
+    TexteMessage texteMessage; //l'ensemble des lignes constituant le message
 };
-#endif /* MAHEADER_H */
 
+#endif /* MAHEADER_H */

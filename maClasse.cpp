@@ -1,38 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 #include "maHeader.h"
 #include <iostream>
-#include <cstdlib>
+using namespace std;
 
-
-ostream& operator<<(ostream& os,const Objet& obj){
-    return os<<"Objet no "<<obj._no;
-}
-Objet::Objet(){
-    cout<<"Appel du constructeur\n";
-    _no = _prochainNo++;
-    _compteur++;
-}
-Objet::~Objet(){
-    cout <<"Appel du destructeur\n";
-    _compteur--;
+Message::Message(const string& expediteur, const string& destinataire)
+: expediteur(expediteur), destinataire(destinataire) {
 }
 
-uint Objet::no() const{
-    return _no;
+void Message::ajouter(const string& ligneTexte) {
+    texteMessage.push_back(ligneTexte);
 }
 
-uint Objet::compteur(){
-   return _compteur;
+string Message::toString() const {
+    const string FORMAT = "%d.%m.%Y %H:%M"; //Exemple : 22.02.2016 21:15
+    //const string FORMAT = "%d.%m.%Y %X"; //Exemple : 22.02.2016 21:15:20
+    char buffer[256];
+    strftime(buffer, sizeof (buffer), FORMAT.c_str(), localtime(&DATE_CREATION));
+    string str = "From : " + expediteur + '\n' +
+            "To : " + destinataire + '\n' +
+            "Date : " + buffer + '\n';
+    str += '\n';
+    for (const string& s : texteMessage)
+        str += s + '\n';
+    return str;
 }
 
-uint Objet::prochainNo(){
-    return _prochainNo;
+void Message::afficher() const {
+    cout << this->toString();
 }
-
-uint Objet::_compteur=0;
-uint Objet::_prochainNo=1;
